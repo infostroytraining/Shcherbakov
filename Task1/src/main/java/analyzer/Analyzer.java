@@ -59,6 +59,7 @@ public class Analyzer {
 	}
 
 	public static void frequency(String text) {
+		long startTime=System.currentTimeMillis();
 		WordContainer wordContainer = new WordContainer();
 		List<Word> result = new ArrayList<>();
 
@@ -83,9 +84,12 @@ public class Analyzer {
 		for (Word word : result) {
 			System.out.println(word.getWord() + " ==> " + word.getFrequency());
 		}
+		long elapsedTime=System.currentTimeMillis()-startTime;
+		System.out.println("Elapsed time: "+elapsedTime+" millis");
 	}
 
 	public static void length(String text) {
+		long startTime=System.currentTimeMillis();
 		String[] arr = text.split("[\\s\\p{Punct}]");
 		Set<String> set = new HashSet<String>();
 		Collections.addAll(set, arr);
@@ -102,9 +106,12 @@ public class Analyzer {
 			String str = list.get(list.size() - 1 - i);
 			System.out.println(str + " ==> " + str.length());
 		}
+		long elapsedTime=System.currentTimeMillis()-startTime;
+		System.out.println("Elapsed time: "+elapsedTime+" millis");
 	}
 
 	public static void duplicates(String text) {
+		long startTime=System.currentTimeMillis();
 		String[] arr = text.split("[\\s\\p{Punct}]");
 		List<String> list = new ArrayList<String>();
 		Collections.addAll(list, arr);
@@ -124,6 +131,8 @@ public class Analyzer {
 				}
 			}
 		}
+		long elapsedTime=System.currentTimeMillis()-startTime;
+		System.out.println("Elapsed time: "+elapsedTime+" millis");
 	}
 
 	public static String readFile(String path, String encoding) {
