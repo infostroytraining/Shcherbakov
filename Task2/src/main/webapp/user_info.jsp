@@ -6,7 +6,9 @@
     <title>User Info</title>
 </head>
 <body>
-
+<form action="/logout" method="post">
+  <input type="submit" value="Logout" />
+</form>
 <div>
   <table>
     <tr>
@@ -19,16 +21,16 @@
 
     <tr>
       <td>
-        ${user.name}
+        ${sessionScope.currentUser.name}
       </td>
       <td>
-        ${user.lastName}
+        ${sessionScope.currentUser.lastName}
       </td>
       <td>
-        ${user.email}
+        ${sessionScope.currentUser.email}
       </td>
       <td>
-        ${user.password}
+        ${sessionScope.currentUser.password}
       </td>
       <td>
         <img src="/uploadAvatar" width="50" height="50">

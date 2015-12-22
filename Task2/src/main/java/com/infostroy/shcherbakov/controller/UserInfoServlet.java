@@ -5,6 +5,9 @@ import com.infostroy.shcherbakov.constants.PathConstants;
 import com.infostroy.shcherbakov.constants.ServletConstants;
 import com.infostroy.shcherbakov.model.entity.User;
 import com.infostroy.shcherbakov.services.UserService;
+import com.infostroy.shcherbakov.services.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,7 @@ import java.io.IOException;
 public class UserInfoServlet extends HttpServlet{
 
     private UserService userService;
+    private static final Logger log = LogManager.getLogger();
 
     @Override
     public void init() throws ServletException {
@@ -29,9 +33,15 @@ public class UserInfoServlet extends HttpServlet{
 
         String email = (String) session.getAttribute(ServletConstants.SESSION_CURRENT_USER_EMAIL);
 
-        User user = userService.getUser(email);
+        User user = null;
+        try {
+            user = userService.getUserByEmail(email);
+        } catch (ServiceException e) {
+            log.error("Exception in servlet", e);
+            throw new ServletException(e);
+        }
 
-        req.setAttribute(ServletConstants.CURRENT_USER, user);
+        req.setAttribute(ServletConstants.SESSION_CURRENT_USER, user);
         req.getRequestDispatcher(PathConstants.USER_INFO_JSP).forward(req, resp);
     }
 }

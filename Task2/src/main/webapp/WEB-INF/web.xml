@@ -6,7 +6,7 @@
         version="3.0">
 
   <welcome-file-list>
-    <welcome-file>registration</welcome-file>
+    <welcome-file>login</welcome-file>
   </welcome-file-list>
 
 
@@ -50,9 +50,34 @@
     <url-pattern>/user_info</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.infostroy.shcherbakov.controller.LoginServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.infostroy.shcherbakov.controller.LogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
   <context-param>
     <param-name>uploadPath</param-name>
     <param-value>F:/avatars</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>storage</param-name>
+    <param-value>db</param-value>
   </context-param>
 
   <listener>

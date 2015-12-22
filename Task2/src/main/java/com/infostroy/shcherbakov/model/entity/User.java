@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class User {
 
+    private int id;
+
     private String name;
 
     private String lastName;
@@ -18,6 +20,14 @@ public class User {
 
     public User(){
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -69,6 +79,7 @@ public class User {
         User user = (User) o;
 
         return new EqualsBuilder()
+                .append(id, user.id)
                 .append(name, user.name)
                 .append(lastName, user.lastName)
                 .append(email, user.email)
@@ -80,6 +91,7 @@ public class User {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(name)
                 .append(lastName)
                 .append(email)
@@ -91,6 +103,7 @@ public class User {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .append("id", id)
                 .append("name", name)
                 .append("lastName", lastName)
                 .append("email", email)

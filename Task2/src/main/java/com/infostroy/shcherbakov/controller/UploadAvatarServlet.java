@@ -5,6 +5,7 @@ import com.infostroy.shcherbakov.constants.PathConstants;
 import com.infostroy.shcherbakov.constants.ServletConstants;
 import com.infostroy.shcherbakov.model.entity.User;
 import com.infostroy.shcherbakov.services.UserService;
+import com.infostroy.shcherbakov.services.exception.ServiceException;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -32,10 +33,7 @@ public class UploadAvatarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-        String email = (String) session.getAttribute(ServletConstants.SESSION_CURRENT_USER_EMAIL);
-
-        User user = userService.getUser(email);
+        User user = (User) session.getAttribute(ServletConstants.SESSION_CURRENT_USER);
 
         File avatarImg = new File(uploadDir + File.separator + user.getEmail() + user.getAvatarName());
 

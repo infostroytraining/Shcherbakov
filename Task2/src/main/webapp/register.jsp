@@ -29,11 +29,11 @@
     <div>
         <div>
             <span>Password<label>*</label></span>
-            <input type="text" name="password" required>
+            <input type="password" name="password" required>
         </div>
         <div>
             <span>Confirm Password<label>*</label></span>
-            <input type="text" name="repeated_password" required>
+            <input type="password" name="repeated_password" required>
         </div>
         <div>
             <span>Avatar</span>
