@@ -16,8 +16,7 @@ import com.infostroy.shcherbakov.services.exception.ServiceException;
 import com.infostroy.shcherbakov.utils.AvatarUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -25,6 +24,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,7 @@ public class RegistrationServlet extends HttpServlet {
         service = (UserService) this.getServletContext().getAttribute(ContextConstants.USER_SERVICE);
         captchaManager = (CaptchaManager) this.getServletContext().getAttribute(ContextConstants.CAPTCHA_MANAGER);
         uploadPath = (String) this.getServletContext().getAttribute(ContextConstants.UPLOAD_PATH);
-    }
+}
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,15 +53,6 @@ public class RegistrationServlet extends HttpServlet {
         captchaManager.setCaptcha(captcha, req, resp);
 
         HttpSession session = req.getSession();
-
-        if (!session.isNew()) {
-            req.setAttribute(ErrorConstants.VALIDATION_ERRORS,
-                    session.getAttribute(ErrorConstants.VALIDATION_ERRORS));
-            req.setAttribute(EntityConstants.REGISTRATION_BEAN,
-                    session.getAttribute(EntityConstants.REGISTRATION_BEAN));
-            session.setAttribute(ErrorConstants.VALIDATION_ERRORS, null);
-            session.setAttribute(EntityConstants.REGISTRATION_BEAN, null);
-        }
 
         req.getRequestDispatcher(PathConstants.REGISTRATION_PAGE_JSP).forward(req, resp);
     }
@@ -77,17 +69,15 @@ public class RegistrationServlet extends HttpServlet {
         String captchaInput = req.getParameter(EntityConstants.CAPTCHA_INPUT);
 
         Captcha captcha = captchaManager.getCaptcha(req, resp);
-
         RegistrationBean registrationBean = new RegistrationBean(name, lastName, email,
                 password, repeatedPassword, AvatarUtils.getAvatarName(req));
 
-        List<String> validationErrors = validateForm(registrationBean, captcha, captchaInput);
-
+        Map<String,String> validationErrors = validateForm(registrationBean, captcha, captchaInput);
+        resp.setCharacterEncoding("UTF-8");
         if (!validationErrors.isEmpty()) {
-            session.setAttribute(ErrorConstants.VALIDATION_ERRORS, validationErrors);
-            session.setAttribute(EntityConstants.REGISTRATION_BEAN, registrationBean);
-            resp.sendRedirect(PathConstants.REGISTRATION_PAGE);
-            return;
+            resp.setStatus(400);
+            resp.setHeader("Content-Type", "application/json");
+            resp.getWriter().write(new Gson().toJson(validationErrors));
         }
 
         User user = Converter.createUserFromRegistrationBean(registrationBean);
@@ -105,18 +95,18 @@ public class RegistrationServlet extends HttpServlet {
         resp.sendRedirect(PathConstants.USER_INFO);
     }
 
-    protected List<String> validateForm(RegistrationBean registrationBean, Captcha captcha, String captchaInput)  {
-        List<String> validationErrors = Validator.validateRegistrationBean(registrationBean);
+    protected Map<String,String> validateForm(RegistrationBean registrationBean, Captcha captcha, String captchaInput)  {
+        Map<String,String> validationErrors=Validator.validateRegistrationBean(registrationBean);
         try {
           User tempUser = service.getUserByEmail(registrationBean.getEmail());
             if (tempUser != null) {
-                validationErrors.add(ErrorConstants.USER_ALREADY_EXISTS);
+                validationErrors.put(EntityConstants.USER_EMAIL,ErrorConstants.USER_ALREADY_EXISTS);
             }
         } catch (ServiceException e) {
             log.error("Exception in servlet", e);
         }
         if (captcha == null || (captchaInput != null && !captchaInput.equals(captcha.getValue()))) {
-            validationErrors.add(ErrorConstants.WRONG_CAPTCHA_ERROR);
+            validationErrors.put(EntityConstants.CAPTCHA_INPUT,ErrorConstants.WRONG_CAPTCHA_ERROR);
         }
 
         return validationErrors;

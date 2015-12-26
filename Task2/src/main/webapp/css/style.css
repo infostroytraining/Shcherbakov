@@ -1,0 +1,18 @@
+.container{
+ padding-top: 20px
+}
+.form-control {
+    width: 100%
+}
+
+span.error {
+    color: #a94442
+}
+
+.table{
+    width: 50%
+}
+
+.row{
+
+}

@@ -1,0 +1,16 @@
+[31m15:03:34.857 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:115 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:04:45.749 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:115 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:05:06.261 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:115 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:07:19.409 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:106 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:17:59.408 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:doPost:88 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:17:59.468 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:106 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:18:41.541 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:doPost:88 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException
+[31m15:18:41.575 [main] ERROR com.infostroy.shcherbakov.controller.RegistrationServlet:validateForm:106 - Exception in servlet
+[m com.infostroy.shcherbakov.services.exception.ServiceException

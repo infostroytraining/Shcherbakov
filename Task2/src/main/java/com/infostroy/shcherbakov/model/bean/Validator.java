@@ -1,7 +1,9 @@
 package com.infostroy.shcherbakov.model.bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.infostroy.shcherbakov.constants.EntityConstants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Validator {
 
@@ -9,27 +11,27 @@ public class Validator {
     private final static String EMAIL_REGEX = "^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$";
     private final static String PASSWORD_REGEX = "^((?=\\S*?[A-Z])(?=\\S*?[a-z])(?=\\S*?[0-9]).{6,})\\S$";
 
-    public static List<String> validateRegistrationBean(RegistrationBean registrationBean) {
-        List<String> errors = new ArrayList<>();
+    public static Map<String,String> validateRegistrationBean(RegistrationBean registrationBean) {
+        Map<String,String> errors=new HashMap<>();
 
         if (!registrationBean.getName().matches(NAME_REGEX)) {
-            errors.add("Invalid name.");
+            errors.put(EntityConstants.USER_NAME,"Invalid name.");
         }
 
         if (!registrationBean.getLastName().matches(NAME_REGEX)) {
-            errors.add("Invalid last name.");
+            errors.put(EntityConstants.USER_LAST_NAME,"Invalid last name.");
         }
 
         if (!registrationBean.getEmail().matches(EMAIL_REGEX)) {
-            errors.add("Invalid email.");
+            errors.put(EntityConstants.USER_EMAIL,"Invalid email.");
         }
 
         if (!registrationBean.getPassword().matches(PASSWORD_REGEX)) {
-            errors.add("Invalid password.");
+            errors.put(EntityConstants.USER_PASSWORD,"Invalid password.");
         }
 
         if (!registrationBean.getPassword().equals(registrationBean.getRepeatedPassword())) {
-            errors.add("Invalid password confirmation.");
+            errors.put(EntityConstants.USER_REPEATED_PASSWORD,"Invalid password confirmation.");
         }
 
         return errors;

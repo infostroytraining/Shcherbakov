@@ -37,7 +37,7 @@ public class PostgreUserDAO implements UserDao {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                user.setId(generatedKeys.getInt(1));
+                user.setId(generatedKeys.getInt(6));
             }
         } catch (SQLException ex) {
             log.error("SQLException during user insert query", ex);

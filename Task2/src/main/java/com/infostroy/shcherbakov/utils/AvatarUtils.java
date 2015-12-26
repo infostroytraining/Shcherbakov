@@ -10,7 +10,7 @@ import com.infostroy.shcherbakov.model.entity.User;
 import java.io.File;
 import java.io.IOException;
 
-public final class AvatarUtils {
+public class AvatarUtils {
 
     private AvatarUtils() {
 
