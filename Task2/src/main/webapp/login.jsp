@@ -26,7 +26,7 @@
                 </div>
 
                 <div id="form-password" class="form-group ">
-                    <label class="col-sm-1 control-label" for="password">Language</label>
+                    <label class="col-sm-1 control-label" for="password">Password</label>
                     <div id="password" class="col-sm-4">
                         <input type="text"  name="password" class="form-control" placeholder="password" required/>
                     </div>
